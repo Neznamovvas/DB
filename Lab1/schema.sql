@@ -66,3 +66,7 @@ CREATE TABLE order_items (
     CONSTRAINT chk_items_qty   CHECK (quantity > 0),
     CONSTRAINT chk_items_price CHECK (unit_price > 0)
 );
+
+
+
+

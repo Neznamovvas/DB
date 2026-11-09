@@ -1,0 +1,52 @@
+erDiagram
+    CUSTOMERS ||--o{ ORDERS : "places"
+    ORDERS ||--|{ ORDER_ITEMS : "contains"
+    PRODUCTS ||--o{ ORDER_ITEMS : "included_in"
+    CATEGORIES ||--o{ PRODUCTS : "classifies"
+    MANUFACTURERS ||--o{ PRODUCTS : "produces"
+
+    CUSTOMERS {
+        int customer_id PK
+        varchar email UK "NOT NULL"
+        varchar full_name "NOT NULL"
+        varchar phone
+        timestamp created_at "NOT NULL"
+    }
+
+    CATEGORIES {
+        int category_id PK
+        varchar name UK "NOT NULL"
+        text description
+    }
+
+    MANUFACTURERS {
+        int manufacturer_id PK
+        varchar name UK "NOT NULL"
+        varchar country "NOT NULL"
+    }
+
+    PRODUCTS {
+        int product_id PK
+        varchar name "NOT NULL"
+        int category_id FK
+        int manufacturer_id FK
+        numeric price "CHECK > 0"
+        int stock_qty "CHECK >= 0"
+        varchar sku UK "NOT NULL"
+    }
+
+    ORDERS {
+        int order_id PK
+        int customer_id FK
+        varchar status "CHECK IN (...)"
+        varchar delivery_address "NOT NULL"
+        timestamp created_at "NOT NULL"
+        numeric total_amount "CHECK >= 0"
+    }
+
+    ORDER_ITEMS {
+        int order_id PK,FK
+        int product_id PK,FK
+        int quantity "CHECK > 0"
+        numeric unit_price "CHECK > 0"
+    }
